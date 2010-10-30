@@ -22,7 +22,6 @@ function domath() {
    str = str.replace(/<(none|mprescripts|mglyph|mspace|msline|maligngroup|malignmark)([^<>]*)>/ig,'<$1$2></$1>');
    str = str.replace(/<\/?(m\w+|none)/ig,function(w){return (w.toLowerCase()).replace(/(<\/?)/,'$1m:')});
    parent.innerHTML = (str);
-   document.getElementById("out").innerHTML=str.replace(/</g,'&lt;');
   }
  }
 }
