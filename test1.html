@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+<title>test 1</title>
+<script src="iemathml.js"></script>
+<script src="operamathml.js"></script>
+<script src="firefoxmathml.js"></script>
+</head>
+<body>
+
+<div>
+
+
+<p>declared empty elements (none, mprescripts, mspace)</p>
+<math>
+<mfrac>
+<msup>
+<mn>1</mn>
+<mn>2</mn>
+</msup>
+<msqrt><mi>a</mi></msqrt>
+</mfrac>
+<mo>+</mo>
+<mi mathvariant="bold">b</mi>
+<mo>+</mo>
+<mmultiscripts>
+<mi>A</mi>
+<none/>
+<mi>i</mi>
+<mprescripts/>
+<none/>
+<mi>k</mi>
+</mmultiscripts>
+<mspace width="2em"/>
+<mi>B</mi>
+</math>
+
+
+<p>empty table cells (&lt;mtd/&gt;)</p>
+
+
+<math >
+<mtable>
+  <mtr>
+    <mtd/>
+    <mtd/>
+    <mtd><mtext>a</mtext></mtd>
+    <mtd><mtext>b</mtext></mtd>
+    <mtd><mtext>c</mtext></mtd>
+    <mtd id="www"/>
+  </mtr>
+  <mtr>
+    <mtd><mtext>x</mtext></mtd>
+    <mtd rowspan="3"><mo>(</mo></mtd>
+    <mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mn>3</mn></mtd>
+    <mtd rowspan="3"><mo>)</mo></mtd>
+  </mtr>
+  <mtr>
+    <mtd><mtext>y</mtext></mtd>
+    <mtd></mtd><mtd><mn>22</mn></mtd><mtd><mn>33</mn></mtd>
+  </mtr>
+  <mtr>
+    <mtd><mtext>z</mtext></mtd>
+    <mtd></mtd><mtd></mtd><mtd><mn>333</mn></mtd>
+  </mtr>
+</mtable>
+</math>
+
+</div>
+
+
+
+</body>
+</html>
