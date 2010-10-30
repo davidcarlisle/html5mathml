@@ -5,12 +5,27 @@
 
 function domathff() {
   var mmlnodea = document.getElementsByTagName("math");
+
   var mmlnode = [];
   for( var i = 0; i < mmlnodea.length; i++ ) {
       mmlnode[mmlnode.length] = mmlnodea[i];
   }
-  for (var i=0; i<mmlnode.length; i++)
-      mmlnode[i].parentNode.replaceChild(convertff(mmlnode[i]),mmlnode[i]);
+  for (var i=0; i<mmlnode.length; i++) {
+   var str=mmlnode[i].innerHTML;
+
+   str = str.replace(/<\/(none|mprescripts|mglyph|mspace|msline|maligngroup|malignmark)[^<>]*>/ig,'');
+   str = str.replace(/<(none|mprescripts|mglyph|mspace|msline|maligngroup|malignmark)([^<>]*)>/ig,'<$1$2></$1>');
+   str = str.replace(/<(mtd)([^<>]*)>(?=\s*<mtd)/ig,'<$1$2></$1>');
+   str = str.replace(/(<\/mtd>)+<\/mtr>/ig,'</mtd></mtr>');
+   str = str.replace(/<(mtr)([^<>]*)>/ig,'</mtr><$1$2>');
+   str = str.replace(/(<mtable[*<>]*>)\s*<\/mtr>/ig,'$1');
+   str = str.replace(/<\/mtr>(\s*<\/mt[dr]>)+<(\/mtable|mtr)>/ig,'</mtr><$2>');
+
+   mmlnode[i].innerHTML=str;
+
+alert(str);
+   mmlnode[i].parentNode.replaceChild(convertff(mmlnode[i]),mmlnode[i]);
+}
 }
 
 function convertff(node) {
