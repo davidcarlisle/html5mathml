@@ -23,7 +23,7 @@ function domathff() {
 
    mmlnode[i].innerHTML=str;
 
-alert(str);
+
    mmlnode[i].parentNode.replaceChild(convertff(mmlnode[i]),mmlnode[i]);
 }
 }
