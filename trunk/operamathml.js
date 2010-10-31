@@ -21,17 +21,70 @@ function operamathml() {
    str = str.replace(/<\/(mfrac|msub|msup)>/g,'</$1></mrow>');
    mmlnode[i].innerHTML=str;
    var mm = mmlnode[i].getElementsByTagName("mmultiscripts");
-   
+   for( var i2 = 0; i2 < mm.length; i2++ ) {
 
-
+   var tbl = document.createElement("mmultiscriptsx");
+   var r1 = document.createElement("mtrx");
+   var r2 = document.createElement("mtrx");
+   var r3 = document.createElement("mtrx");
+   tbl.appendChild(r1);
+   tbl.appendChild(r2);
+   tbl.appendChild(r3);
+    var cnode = [];
+    var chel = mm[i2].getElementsByTagName("*");
+    for( var i3 = 0; i3 < chel.length; i3++ ) {
+        cnode[cnode.length] = chel[i3];
+    }
+   var presc = 0;
+    for (var i4=0; i4<cnode.length; i4++) {
+     if (cnode[i4].nodeName=="MPRESCRIPTS") {
+       presc = i4;
+       break;
+      }
+}
+  var cell;
+  for(i5=presc+1;i5<cnode.length;i5=i5+2) {
+   cell=document.createElement("mtdx");
+   cell.appendChild(cnode[i5]);
+   r3.appendChild(cell);
+   cell=document.createElement("mtdx");
+   r2.appendChild(cell);
+   cell=document.createElement("mtdx");
+   cell.appendChild(cnode[i5+1]);
+   r1.appendChild(cell);
+  }
+   cell=document.createElement("mtdx");
+   r3.appendChild(cell);
+   cell=document.createElement("mtdx");
+   cell.appendChild(cnode[0]);
+   r2.appendChild(cell);
+   cell=document.createElement("mtdx");
+   r1.appendChild(cell);
+  for(i5=1;i5<presc;i5=i5+2) {
+   var cell=document.createElement("mtdx");
+   cell.appendChild(cnode[i5]);
+   r3.appendChild(cell);
+   cell=document.createElement("mtdx");
+   r2.appendChild(cell);
+   cell=document.createElement("mtdx");
+   cell.appendChild(cnode[i5+1]);
+   r1.appendChild(cell);
   }
 
+  tbl.appendChild(r1);
+  tbl.appendChild(r2);
+  tbl.appendChild(r3);
 
+
+mm[i2].parentNode.replaceChild(tbl,mm[i2]);
+   
+}
+}
 }
 
 
 
-if ( navigator.userAgent.match(/Presto\/2\.6/)) {
+ if ( navigator.userAgent.match(/Presto\/2\.6/)) {
   document.write("<link rel=\"stylesheet\" href=\"operamathml.css\" type=\"text/css\">");
   window.addEventListener("load", operamathml, false);
     }
