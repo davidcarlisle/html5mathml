@@ -35,7 +35,7 @@ function operamathml() {
     for( var i3 = 0; i3 < chel.length; i3++ ) {
         cnode[cnode.length] = chel[i3];
     }
-   var presc = 0;
+   var presc = cnode.length;
     for (var i4=0; i4<cnode.length; i4++) {
      if (cnode[i4].nodeName=="MPRESCRIPTS") {
        presc = i4;
@@ -71,10 +71,7 @@ function operamathml() {
    r1.appendChild(cell);
   }
 
-  tbl.appendChild(r1);
-  tbl.appendChild(r2);
-  tbl.appendChild(r3);
-
+  
 
 mm[i2].parentNode.replaceChild(tbl,mm[i2]);
    
