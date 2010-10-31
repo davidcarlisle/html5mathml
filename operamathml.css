@@ -39,13 +39,13 @@ mfrac[numalign="left"] > *:first-child, mfrac[denalign="left"] > * + *
 	{text-align:left;}
 mfrac[numalign="right"] > *:first-child, mfrac[denalign="right"] > * + *
 	{text-align:right;}
-msub, msup, msubsup, mmultiscripts
+msub, msup, msubsup, mmultiscripts, mmultiscriptsx
 	{display:inline-table;
 	line-height:0.4em;}
-msubsup, msup, mmultiscripts
+msubsup, msup, mmultiscripts, mmultiscriptsx
 	{margin-top:0.4ex;
 	-o-table-baseline:2;}
-msubsup, msub, mmultiscripts
+msubsup, msub, mmultiscripts, mmultiscriptsx
 	{margin-bottom:0.4ex;}
 msubsup, msup
 	{direction:rtl;}
@@ -328,3 +328,9 @@ maction[actiontype="tooltip"]:hover > * + *
 annotation, annotation-xml
 	{display:none;}
 
+mmultiscriptsx > *
+         {display:table-row;}
+mtrx
+	{display:table-row;}
+mtdx
+	{display:table-cell;}
