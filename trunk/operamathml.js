@@ -6,10 +6,12 @@
 function operamathml() {
  var mmlnodea = document.getElementsByTagName("math");
  
+
  var mmlnode = [];
   for( var i = 0; i < mmlnodea.length; i++ ) {
     mmlnode[mmlnode.length] = mmlnodea[i];
   }
+
   for (var i=0; i<mmlnode.length; i++) {
    var str=mmlnode[i].innerHTML;
    str = str.replace(/<\/(none|mprescripts|mglyph|mspace|msline|maligngroup|malignmark)[^<>]*>/ig,'');
@@ -17,11 +19,13 @@ function operamathml() {
    str = str.replace(/<(mtd)([^<>]*)>(?=\s*<mtd)/ig,'<$1$2></$1>');
    str = str.replace(/(<\/mtd>)+<\/mtr>/ig,'</mtd></mtr>');
    str = str.replace(/(<mspace[^<>]*)width=.([0-9][^"]*)"/ig,'$1style="margin-left:$2"');
-   str = str.replace(/<(mfrac|msub|msup)([^<>\/]*)>/ig,'<mrow><$1$2>');
-   str = str.replace(/<\/(mfrac|msub|msup)>/ig,'</$1></mrow>');
+   str = str.replace(/<(mfrac|msub|msup|mtable)([^<>\/]*)>/ig,'<mrow><$1$2>');
+   str = str.replace(/<\/(mfrac|msub|msup|mtable)>/ig,'</$1></mrow>');
    str = str.replace(/(<[^<>]*)mathcolor="/ig,'$1style="color:');
    mmlnode[i].innerHTML=str;
+
    var mm = mmlnode[i].getElementsByTagName("mmultiscripts");
+
    for( var i2 = 0; i2 < mm.length; i2++ ) {
 
    var tbl = document.createElement("mmultiscriptsx");
