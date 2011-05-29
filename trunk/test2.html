@@ -1,10 +1,11 @@
 <!doctype html>
 <html>
 <head>
-<title>test 1</title>
-<script src="iemathml.js"></script>
+<title>test 2</title>
+<script xsrc="iemathml.js"></script>
 <script src="operamathml.js"></script>
-<script src="firefox3mathml.js"></script>
+<script xsrc="webkitmathml.js"></script>
+<script xsrc="firefox3mathml.js"></script>
 </head>
 <body>
 
@@ -13,6 +14,8 @@
 
 <p>declared empty elements (none, mprescripts, mspace)</p>
 <math>
+<mfrac><mn>1</mn><mi>a</mi></mfrac>
+<mo>-</mo>
 <mfrac>
 <msup>
 <mn>1</mn>
@@ -57,7 +60,7 @@
   </mtr>
   <mtr>
     <mtd><mtext>y</mtext></mtd>
-    <mtd></mtd><mtd><mn>22</mn></mtd><mtd><mn>33</mn></mtd>
+    <mtd></mtd><mtd colspan="2"><mn>22</mn></mtd>
   </mtr>
   <mtr>
     <mtd><mtext>z</mtext></mtd>
@@ -66,6 +69,11 @@
 </mtable>
 </math>
 
+<p>attributes</p>
+
+<math>
+<msup><mi mathcolor="red">A</mi><mn mathvariant="bold">1</mn></msup>
+</math>
 </div>
 
 
