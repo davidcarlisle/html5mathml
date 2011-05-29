@@ -29,7 +29,8 @@ function domath() {
 
 if (navigator.userAgent.match(/MSIE [6-9]/)) {
 document.write("<object id=\"mmlFactory\" classid=\"clsid:32F66A20-7614-11D4-BD11-00104BD3F987\"></object><?import namespace=\"m\" implementation=\"#mmlFactory\"?>");
-window.onload = domath;
+//window.onload = domath;
+window.attachEvent("onload", domath);
     }
 
 
