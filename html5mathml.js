@@ -157,45 +157,31 @@ if (!mathmlrendered) {
        break;
       }
 }
-  var cell;
   for(i5=presc+1;i5<cnode.length;i5=i5+2) {
-   cell=document.createElement("mtdx");
-   cell.appendChild(cnode[i5]);
-   r3.appendChild(cell);
-   cell=document.createElement("mtdx");
-   r2.appendChild(cell);
-   cell=document.createElement("mtdx");
-   cell.appendChild(cnode[i5+1]);
-   r1.appendChild(cell);
+   addmmscripts(r1,r2,r3,i5,cnode);
   }
-   cell=document.createElement("mtdx");
-   r3.appendChild(cell);
-   cell=document.createElement("mtdx");
-   cell.appendChild(cnode[0]);
-   r2.appendChild(cell);
-   cell=document.createElement("mtdx");
-   r1.appendChild(cell);
-  for(i5=1;i5<presc;i5=i5+2) {
+   addmmscripts(r1,r2,r3,0,cnode);
+    for(i5=1;i5<presc;i5=i5+2) {
+   addmmscripts(r1,r2,r3,i5,cnode);
+  }
+    mm[i2].parentNode.replaceChild(tbl,mm[i2]);
+}
+}
+}
+
+
+
+function addmmscripts(r1,r2,r3,i,n) {
    var cell=document.createElement("mtdx");
-   cell.appendChild(cnode[i5]);
+   if(i>0) {cell.appendChild(n[i]);}
    r3.appendChild(cell);
    cell=document.createElement("mtdx");
+   if(i==0) {cell.appendChild(n[i]);}
    r2.appendChild(cell);
    cell=document.createElement("mtdx");
-   cell.appendChild(cnode[i5+1]);
+   if(i>0) {cell.appendChild(n[i+1]);}
    r1.appendChild(cell);
-  }
-
-  
-
-mm[i2].parentNode.replaceChild(tbl,mm[i2]);
-   
-}
-}
-}
-
-
-
+}    
 
 function domathff() {
   var mmlnode = getmathnode();
