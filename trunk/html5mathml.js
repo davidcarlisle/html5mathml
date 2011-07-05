@@ -128,7 +128,12 @@ if (!mathmlrendered) {
      mmlnode[i].parentNode.replaceChild(mtest.childNodes[0], mmlnode[i]);
   }
   }
-   var mm = thisnode.getElementsByTagName("mmultiscripts");
+   var mma = thisnode.getElementsByTagName("mmultiscripts");
+ var mm = [];
+  for( var i = 0; i < mma.length; i++ ) {
+    mm[mm.length] = mma[i];
+  }
+
 
    for( var i2 = 0; i2 < mm.length; i2++ ) {
 
