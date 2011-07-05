@@ -98,7 +98,7 @@ mfenced[close="\27e9"] > *:after, mfenced[close="\232A"] > *:after
 mfenced[open=""] > *:before, mfenced[close=""] > *:after
 	{content:normal;}
 mfenced
-	{display:inline-table;color:red;}
+	{display:inline-table;}
 mfenced > *:first-child
 	{display:table-row;}
 mfenced > *:first-child:before,
@@ -147,7 +147,6 @@ mfrac[linethickness="thick"] > * + *
 	{border-top-width:thick;}
 msqrt
 	{display:inline-block;
-         color:red;
 	position:relative;
 	border-top:solid 1px;
 	border-left:groove 2px;
