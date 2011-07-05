@@ -5,7 +5,7 @@
 
 function webkitmathml() {
 
-//alert("start" + document.getElementsByTagName("body")[0].innerHTML);
+// alert("start" + document.getElementsByTagName("body")[0].innerHTML);
 
  var mmlnodea = document.getElementsByTagName("math");
  
@@ -51,7 +51,8 @@ if (!mathmlrendered) {
    str = str.replace(/<(mtd)([^<>]*)>(?=\s*<mtd)/ig,'<$1$2></$1>');
    str = str.replace(/(<\/mtd>)+<\/mtr>/ig,'</mtd></mtr>');
     }
-   str = str.replace(/(<mspace[^<>]*)width=.([0-9][^"]*)"/ig,'$1style="margin-left:$2"');
+   str = str.replace(/<mspace([^<>]*)width=.([0-9][^"]*)"([^<>]*)/ig,'<mtext $1$3><span style="margin-left:$2"');
+   str = str.replace(/<\/mspace>/ig,'&#x200c;</span></mtext>');
 //alert(1+str);
    str = str.replace(/<(mfrac|msub|msup|mtable|msqrt)([^<>\/]*)>/ig,'<zrow$1><$1$2>');
    str = str.replace(/<\/(mfrac|msub|msup|mtable|msqrt)>/ig,'</$1></zrow$1>');
@@ -70,7 +71,11 @@ if (!mathmlrendered) {
      mmlnode[i].parentNode.replaceChild(mtest.childNodes[0], mmlnode[i]);
   }
   }
-   var mm = thisnode.getElementsByTagName("mmultiscripts");
+   var mma = thisnode.getElementsByTagName("mmultiscripts");
+ var mm = [];
+  for( var i = 0; i < mma.length; i++ ) {
+    mm[mm.length] = mma[i];
+  }
 
    for( var i2 = 0; i2 < mm.length; i2++ ) {
 
@@ -129,7 +134,7 @@ mm[i2].parentNode.replaceChild(tbl,mm[i2]);
    
 }
 }
-//alert("end" + document.getElementsByTagName("body")[0].innerHTML);
+alert("end" + document.getElementsByTagName("body")[0].innerHTML);
 }
 
 
