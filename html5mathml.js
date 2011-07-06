@@ -4,11 +4,13 @@
 // http://www.opensource.org/licenses/mit-license.php
 
 
+var mmlns = "http://www.w3.org/1998/Math/MathML";
+
 function getmathnode() {
     var mmlnodea = document.getElementsByTagName("math");
     var mmlnode = [];
     for( var i = 0; i < mmlnodea.length; i++ ) {
-	mmlnode[mmlnode.length] = mmlnodea[i];
+        mmlnode[mmlnode.length] = mmlnodea[i];
     }
     return mmlnode;
 }
@@ -24,34 +26,34 @@ function fixempties (str) {
 function domath() {
     var mmlnode = getmathnode();
     for (var i=0; i<mmlnode.length; i++) {
-	var parent = mmlnode[i].parentNode;
-	if(parent!=null){
-	    var str=parent.innerHTML;
-	    str = str.replace(/xmlns=.http:\/\/www.w3.org\/1998\/Math\/MathML./ig,'');
-	    str = str.replace(/<\?XML:NAMESPACE[^<>]*>/ig,'');
-	    str = fixempties(str);
-	    str = str.replace(/<\/?(m\w+|none)/ig,function(w){return (w.toLowerCase()).replace(/(<\/?)/,'$1m:')});
-	    parent.innerHTML = (str);
-	}
+        var parent = mmlnode[i].parentNode;
+        if(parent!=null){
+            var str=parent.innerHTML;
+            str = str.replace(/xmlns=.http:\/\/www.w3.org\/1998\/Math\/MathML./ig,'');
+            str = str.replace(/<\?XML:NAMESPACE[^<>]*>/ig,'');
+            str = fixempties(str);
+            str = str.replace(/<\/?(m\w+|none)/ig,function(w){return (w.toLowerCase()).replace(/(<\/?)/,'$1m:')});
+            parent.innerHTML = (str);
+        }
     }
 }
 
 
 function convertie(node) {
     if (node.nodeType==1) {
-	var newnode = 
-	    document.createElement("m:" + node.nodeName);
-	for(var i=0; i < node.attributes.length; i++)
-	    newnode.setAttribute(node.attributes[i].nodeName,
-				 node.attributes[i].nodeValue);
-	var cnode = [];
-	for( var i = 0; i <node.childNodes.length; i++ ) {
-	    cnode[cnode.length] = node.childNodes[i];
-	}
-	for (var i=0; i<cnode.length; i++) {
-	    newnode.appendChild(convertie(cnode[i]));
-	}
-	return newnode;
+        var newnode = 
+            document.createElement("m:" + node.nodeName);
+        for(var i=0; i < node.attributes.length; i++)
+            newnode.setAttribute(node.attributes[i].nodeName,
+                                 node.attributes[i].nodeValue);
+        var cnode = [];
+        for( var i = 0; i <node.childNodes.length; i++ ) {
+            cnode[cnode.length] = node.childNodes[i];
+        }
+        for (var i=0; i<cnode.length; i++) {
+            newnode.appendChild(convertie(cnode[i]));
+        }
+        return newnode;
     }
     else return node;
 }
@@ -61,11 +63,11 @@ function domath10() {
     mp.id = "mathplayer";
     mp.classid = "clsid:32F66A20-7614-11D4-BD11-00104BD3F987";
     document.getElementsByTagName("head")[0].appendChild(mp);
-    document.namespaces.add("m","http://www.w3.org/1998/Math/MathML");
+    document.namespaces.add("m",mmlns);
     document.namespaces.m.doImport("#mathplayer");
     var mmlnode = getmathnode();
-    for (var i=0; i<mmlnode.length; i++) {	
-	mmlnode[i].parentNode.replaceChild(convertie(mmlnode[i]),mmlnode[i]);
+    for (var i=0; i<mmlnode.length; i++) {      
+        mmlnode[i].parentNode.replaceChild(convertie(mmlnode[i]),mmlnode[i]);
     }
 }
 
@@ -183,7 +185,7 @@ function addmmscripts(r1,r2,r3,i,n) {
    r1.appendChild(cell);
 }    
 
-function domathff() {
+function domathff3() {
   var mmlnode = getmathnode();
   for (var i=0; i<mmlnode.length; i++) {
    var str=mmlnode[i].innerHTML;
@@ -203,7 +205,7 @@ function domathff() {
 function convertff(node) {
   if (node.nodeType==1) {
     var newnode = 
-      document.createElementNS("http://www.w3.org/1998/Math/MathML",
+      document.createElementNS(mmlns,
         node.nodeName.toLowerCase());
     for(var i=0; i < node.attributes.length; i++)
       newnode.setAttribute(node.attributes[i].nodeName,
@@ -220,6 +222,34 @@ function convertff(node) {
   else return node;
 }
 
+function domathff4 () {
+    var mtds = document.getElementsByTagName("mtd");
+    for(var i=0; i < mtds.length; i++) {
+    var node = mtds[i];
+    var rs = 1;
+    for(var j=0; j < node.attributes.length;j++)
+      if(node.attributes[j].nodeName=='rowspan') {
+         rs = node.attributes[j].nodeValue;
+         var cs=node.childNodes;
+                for( var k = 0; k <cs.length; k++ ) {
+      if (cs[k].nodeName=='mo') {
+        var mp = document.createElementNS(mmlns, "mpadded");
+        mp.setAttribute("style","position:relative;top:" + 0.7*rs + "em");
+        mp.setAttribute("height","0pt");
+        cs[k].setAttribute("minsize",2 * rs);
+        mp.appendChild(cs[k].cloneNode(true));
+        node.replaceChild(mp,cs[k]);
+      }
+  }
+        break;
+         }
+    }
+alert(document.getElementsByTagName("body")[0].innerHTML);
+
+}
+
+
+
 
 if (navigator.userAgent.match(/MSIE [6-9]/)) {
     document.write("<object id=\"mmlFactory\" classid=\"clsid:32F66A20-7614-11D4-BD11-00104BD3F987\"></object><?import namespace=\"m\" implementation=\"#mmlFactory\"?>");
@@ -228,8 +258,12 @@ if (navigator.userAgent.match(/MSIE [6-9]/)) {
     window.attachEvent("onload", domath10);
 } else if ( navigator.userAgent.match(/WebKit|Presto/)) {
   window.addEventListener("load", webkitmathml, false);
-} else if ( navigator.userAgent.match(/Gecko/) && (! navigator.userAgent.match(/Firefox [4-9]/))) {
-  window.addEventListener('load', domathff, false);
+} else if ( navigator.userAgent.match(/Gecko/) && (! navigator.userAgent.match(/Firefox[ /][4-9]/))) {
+//alert("ff3");
+  window.addEventListener('load', domathff3, false);
+} else if ( navigator.userAgent.match(/Gecko/) && (navigator.userAgent.match(/Firefox[ /][4-7]/))) {
+//alert("ff4");
+  window.addEventListener('load', domathff4, false);
 }
 
 
