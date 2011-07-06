@@ -68,7 +68,9 @@ if (!mathmlrendered) {
      mtest.innerHTML=str;
 //alert(3+mtest.innerHTML);
      thisnode=mtest.childNodes[0];
+   if(mmlnode[i].parentNode!=null){
      mmlnode[i].parentNode.replaceChild(mtest.childNodes[0], mmlnode[i]);
+    }
   }
   }
    var mma = thisnode.getElementsByTagName("mmultiscripts");
