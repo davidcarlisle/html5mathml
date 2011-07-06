@@ -23,7 +23,7 @@ function fixempties (str) {
     return str;
 }
 
-function domath() {
+function domathie9() {
     var mmlnode = getmathnode();
     for (var i=0; i<mmlnode.length; i++) {
         var parent = mmlnode[i].parentNode;
@@ -58,7 +58,7 @@ function convertie(node) {
     else return node;
 }
 
-function domath10() {
+function domathie10() {
     var mp = document.createElement("object");
     mp.id = "mathplayer";
     mp.classid = "clsid:32F66A20-7614-11D4-BD11-00104BD3F987";
@@ -76,43 +76,31 @@ function domath10() {
 
 
 
-function webkitmathml() {
-
+function domathwkop() {
  var mtest = document.createElement("span");
  mtest.innerHTML="<math><mspace width='2px'/><mspace/></math>";
-
-document.getElementsByTagName("body")[0].appendChild(mtest);
-
-  var mmlnode = getmathnode();
-
-var understandsempty = (mtest.childNodes[0].childNodes.length == 2);
-var mathhasinnerhtml = (mtest.childNodes[0].innerHTML != null);
-var mathmlrendered =  (mmlnode[mmlnode.length - 1].clientWidth > 0);
-
-if (!mathmlrendered) {
+ document.getElementsByTagName("body")[0].appendChild(mtest);
+ var mmlnode = getmathnode();
+ var understandsempty = (mtest.childNodes[0].childNodes.length == 2);
+ var mathhasinnerhtml = (mtest.childNodes[0].innerHTML != null);
+ var mathmlrendered =  (mmlnode[mmlnode.length - 1].clientWidth > 0);
+ if (!mathmlrendered) {
   var head = document.getElementsByTagName("head")[0];
   head.innerHTML = head.innerHTML + "<link rel=\"stylesheet\" href=\"webkitmathml.css\" type=\"text/css\">";
   }
-
-
-
-
   for (var i=0; i<mmlnode.length; i++) {
-  
   if(!mathmlrendered) {
-  
- var str;
+  var str;
   if(mathhasinnerhtml) {
    str=mmlnode[i].innerHTML;
    } else {
    mtest=document.createElement("span");
    mtest.appendChild(mmlnode[i].cloneNode(true));
    str=mtest.innerHTML;
-
    }
-  if(!understandsempty) {
-      str = fixempties(str);
-    }
+   if(!understandsempty) {
+    str = fixempties(str);
+   }
    str = str.replace(/<mspace([^<>]*)width=.([0-9][^"]*)"([^<>]*)/ig,'<mtext $1$3><span style="margin-left:$2"');
    str = str.replace(/<\/mspace>/ig,'&#x200c;</span></mtext>');
    str = str.replace(/<(mfrac|msub|msup|mtable|msqrt)([^<>\/]*)>/ig,'<zrow$1><$1$2>');
@@ -120,26 +108,22 @@ if (!mathmlrendered) {
    str = str.replace(/<(mfenced)([^<>\/]*)>/ig,'<$1$2><mrow>');
    str = str.replace(/<\/(mfenced)>/ig,'</mrow></$1>');
    str = str.replace(/(<[^<>]*)mathcolor="/ig,'$1style="color:');
-  var thisnode;
-  if(mathhasinnerhtml) {
-   mmlnode[i].innerHTML=str;
-   thisnode= mmlnode[i];
-   } else {
-     mtest.innerHTML=str;
-     thisnode=mtest.childNodes[0];
-     mmlnode[i].parentNode.replaceChild(mtest.childNodes[0], mmlnode[i]);
+   var thisnode;
+   if(mathhasinnerhtml) {
+    mmlnode[i].innerHTML=str;
+    thisnode= mmlnode[i];
+    } else {
+    mtest.innerHTML=str;
+    thisnode=mtest.childNodes[0];
+    mmlnode[i].parentNode.replaceChild(mtest.childNodes[0], mmlnode[i]);
+   }
   }
-  }
-   var mma = thisnode.getElementsByTagName("mmultiscripts");
- var mm = [];
+  var mma = thisnode.getElementsByTagName("mmultiscripts");
+  var mm = [];
   for( var i = 0; i < mma.length; i++ ) {
     mm[mm.length] = mma[i];
   }
-
-
-   for( var i2 = 0; i2 < mm.length; i2++ ) {
-
-
+  for( var i2 = 0; i2 < mm.length; i2++ ) {
    var tbl = document.createElement("mmultiscriptsx");
    var r1 = document.createElement("mtrx");
    var r2 = document.createElement("mtrx");
@@ -158,7 +142,7 @@ if (!mathmlrendered) {
        presc = i4;
        break;
       }
-}
+  }
   for(i5=presc+1;i5<cnode.length;i5=i5+2) {
    addmmscripts(r1,r2,r3,i5,cnode);
   }
@@ -170,8 +154,6 @@ if (!mathmlrendered) {
 }
 }
 }
-
-
 
 function addmmscripts(r1,r2,r3,i,n) {
    var cell=document.createElement("mtdx");
@@ -189,15 +171,11 @@ function domathff3() {
   var mmlnode = getmathnode();
   for (var i=0; i<mmlnode.length; i++) {
    var str=mmlnode[i].innerHTML;
-
    str = fixempties(str);
 //   str = str.replace(/<(mtr)([^<>]*)>/ig,'</mtr><$1$2>');
 //   str = str.replace(/(<mtable[*<>]*>)\s*<\/mtr>/ig,'$1');
 //   str = str.replace(/<\/mtr>(\s*<\/mt[dr]>)+<(\/mtable|mtr)>/ig,'</mtr><$2>');
-
    mmlnode[i].innerHTML=str;
-
-
    mmlnode[i].parentNode.replaceChild(convertff(mmlnode[i]),mmlnode[i]);
 }
 }
@@ -244,20 +222,16 @@ function domathff4 () {
         break;
          }
     }
-alert(document.getElementsByTagName("body")[0].innerHTML);
-
 }
-
-
 
 
 if (navigator.userAgent.match(/MSIE [6-9]/)) {
     document.write("<object id=\"mmlFactory\" classid=\"clsid:32F66A20-7614-11D4-BD11-00104BD3F987\"></object><?import namespace=\"m\" implementation=\"#mmlFactory\"?>");
-    window.attachEvent("onload", domath);
+    window.attachEvent("onload", domathie9);
 } else if (navigator.userAgent.match(/MSIE 1[0-9]/)) {
-    window.attachEvent("onload", domath10);
+    window.attachEvent("onload", domathie10);
 } else if ( navigator.userAgent.match(/WebKit|Presto/)) {
-  window.addEventListener("load", webkitmathml, false);
+  window.addEventListener("load", domathwkop, false);
 } else if ( navigator.userAgent.match(/Gecko/) && (! navigator.userAgent.match(/Firefox[ /][4-9]/))) {
 //alert("ff3");
   window.addEventListener('load', domathff3, false);
