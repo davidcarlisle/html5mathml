@@ -74,9 +74,12 @@ function domathie10() {
 
 
 
-
-
 function domathwkop() {
+  var head = document.getElementsByTagName("head")[0];
+  head.innerHTML = head.innerHTML + "<link rel=\"stylesheet\" href=\"html5mathml.css\" type=\"text/css\">";
+}
+
+function domathwkop_old() {
  var mtest = document.createElement("span");
  mtest.innerHTML="<math><mspace width='2px'/><mspace/></math>";
  document.getElementsByTagName("body")[0].appendChild(mtest);
@@ -88,15 +91,15 @@ function domathwkop() {
   var head = document.getElementsByTagName("head")[0];
   head.innerHTML = head.innerHTML + "<link rel=\"stylesheet\" href=\"webkitmathml.css\" type=\"text/css\">";
   }
-  for (var i=0; i<mmlnode.length; i++) {
+  for (var i=0; i<mmlnode.length-1; i++) {
   if(!mathmlrendered) {
   var str;
   if(mathhasinnerhtml) {
    str=mmlnode[i].innerHTML;
    } else {
-   mtest=document.createElement("span");
-   mtest.appendChild(mmlnode[i].cloneNode(true));
-   str=mtest.innerHTML;
+   var mtest2=document.createElement("span");
+   mtest2.appendChild(mmlnode[i].cloneNode(true));
+   str=mtest2.innerHTML;
    }
    if(!understandsempty) {
     str = fixempties(str);
@@ -114,6 +117,7 @@ function domathwkop() {
     thisnode= mmlnode[i];
     } else {
     mtest.innerHTML=str;
+alert(str);
     thisnode=mtest.childNodes[0];
     mmlnode[i].parentNode.replaceChild(mtest.childNodes[0], mmlnode[i]);
    }
@@ -224,6 +228,20 @@ function domathff4 () {
     }
 }
 
+function domathandroidff () {
+    var dj = document.createElement("style");
+   dj.innerHTML="@font-face {font-family: myfamily; src: local(DejaVu Serif), url('http://monet.nag.co.uk/~dpc/DejaVuSerif.ttf') format('truetype'); }  ::-moz-math-stretchy { font-family: myfamily, serif; }";
+    document.getElementsByTagName("head")[0].appendChild(dj);
+
+}
+
+if (navigator.userAgent.match(/Android.*Firefox/)) {
+ window.addEventListener('load', domathandroidff, false);
+}
+
+
+
+
 
 if (navigator.userAgent.match(/MSIE [6-9]/)) {
     document.write("<object id=\"mmlFactory\" classid=\"clsid:32F66A20-7614-11D4-BD11-00104BD3F987\"></object><?import namespace=\"m\" implementation=\"#mmlFactory\"?>");
@@ -235,7 +253,7 @@ if (navigator.userAgent.match(/MSIE [6-9]/)) {
 } else if ( navigator.userAgent.match(/Gecko/) && (! navigator.userAgent.match(/Firefox[ /][4-9]/))) {
 //alert("ff3");
   window.addEventListener('load', domathff3, false);
-} else if ( navigator.userAgent.match(/Gecko/) && (navigator.userAgent.match(/Firefox[ /][4-7]/))) {
+} else if ( navigator.userAgent.match(/Gecko/) && (navigator.userAgent.match(/Firefox[ /][4-9]/))) {
 //alert("ff4");
   window.addEventListener('load', domathff4, false);
 }
