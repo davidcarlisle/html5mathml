@@ -230,7 +230,7 @@ function domathff4 () {
 
 function domathandroidff () {
     var dj = document.createElement("style");
-   dj.innerHTML="@font-face {font-family: myfamily; src: local(DejaVu Serif), url('http://monet.nag.co.uk/~dpc/DejaVuSerif.ttf') format('truetype'); }  ::-moz-math-stretchy { font-family: myfamily, serif; }";
+   dj.innerHTML="@font-face {font-family: myfamily; src: local(DejaVu Serif), url('DejaVuSerif.ttf') format('truetype'); }  ::-moz-math-stretchy { font-family: myfamily, serif; }";
     document.getElementsByTagName("head")[0].appendChild(dj);
 
 }
