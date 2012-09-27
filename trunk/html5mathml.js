@@ -4,6 +4,7 @@
 // http://www.opensource.org/licenses/mit-license.php
 
 
+
 var mmlns = "http://www.w3.org/1998/Math/MathML";
 
 function getmathnode() {
@@ -27,14 +28,16 @@ function domathie9() {
     var mmlnode = getmathnode();
     for (var i=0; i<mmlnode.length; i++) {
         var parent = mmlnode[i].parentNode;
-        if(parent!=null){
+        try {
             var str=parent.innerHTML;
             str = str.replace(/xmlns=.http:\/\/www.w3.org\/1998\/Math\/MathML./ig,'');
             str = str.replace(/<\?XML:NAMESPACE[^<>]*>/ig,'');
             str = fixempties(str);
             str = str.replace(/<\/?(m\w+|none)/ig,function(w){return (w.toLowerCase()).replace(/(<\/?)/,'$1m:')});
-            parent.innerHTML = (str);
-        }
+	    parent.innerHTML = (str);
+	}
+	catch (e) {
+	}
     }
 }
 
@@ -74,12 +77,12 @@ function domathie10() {
 
 
 
-function domathwkop() {
+function domathwkop_new() {
   var head = document.getElementsByTagName("head")[0];
   head.innerHTML = head.innerHTML + "<link rel=\"stylesheet\" href=\"html5mathml.css\" type=\"text/css\">";
 }
 
-function domathwkop_old() {
+function domathwkop() {
  var mtest = document.createElement("span");
  mtest.innerHTML="<math><mspace width='2px'/><mspace/></math>";
  document.getElementsByTagName("body")[0].appendChild(mtest);
@@ -117,7 +120,6 @@ function domathwkop_old() {
     thisnode= mmlnode[i];
     } else {
     mtest.innerHTML=str;
-alert(str);
     thisnode=mtest.childNodes[0];
     mmlnode[i].parentNode.replaceChild(mtest.childNodes[0], mmlnode[i]);
    }
@@ -256,6 +258,7 @@ if (navigator.userAgent.match(/MSIE [6-9]/)) {
 } else if ( navigator.userAgent.match(/Gecko/) && (navigator.userAgent.match(/Firefox[ /][4-9]/))) {
 //alert("ff4");
   window.addEventListener('load', domathff4, false);
+} else {
 }
 
 
