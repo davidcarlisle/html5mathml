@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MathML mlongdiv generator</title>
+<style>
+td {
+border: solid thin black;
+padding-left: 1em;
+padding-right: 1em;
+}
+</style>
+<script>
+
+function padtol (s,l) {
+var v = "";
+for (var tmp = s; tmp< l; tmp++) {
+v = v + " ";
+}
+return v;
+}
+
+function longdiv() {
+var istr = "12345678912345678";
+var jstr = "325";
+
+il=istr.length;
+jl=jstr.length;
+
+j=parseInt(jstr,10);
+
+ia=istr.substr(0,jl);
+
+var jpadl=jstr.length+1;
+
+if(parseInt(ia,10)< j) {
+ jl= jl+1;
+}
+
+ans="";
+work="";
+work="<span class='initial'>" + jstr + " | " +istr +"</span>";
+pad ="";
+for (var tmp = 0; tmp< jpadl +1; tmp++) {
+pad = " " + pad;
+}
+
+var jline ="<span class='line'>";
+for (var tmp = 0; tmp< jpadl; tmp++) {
+jline = jline + "-";
+}
+jline=jline + "</span>"
+var ansline="";
+rstr=istr.substr(0,jl);
+
+
+for (var k=jl;k<=il;k++) {
+r=parseInt(rstr,10);
+a1=Math.floor(r / j);
+ans = ans  + a1;
+var jtimes= j*a1;
+pad = " " + pad;
+rstr= (r - j*a1) + "";
+work = work +  "\n" + pad + padtol((jtimes + "").length,jpadl) + "<span style='color:green'><mn>" +jtimes +"</mn></span>" ;
+work = work +  "\n" + pad +  jline + "<mline/>"; 
+work = work + "</msgroup><msgroup>";
+work = work +  "\n" + pad + padtol(rstr.length,jpadl)+ "<span style='color:red'><mn>"+ rstr +"</span>" + istr.substr(k,1) +"</mn>" ;
+rstr = rstr + istr.substr(k,1);
+}
+
+var anspad="";
+for (var tmp = 0; tmp< 2*jpadl +1; tmp++) {
+anspad = " " + anspad;
+}
+var ansline="";
+for (var tmp = 0; tmp< jpadl +1; tmp++) {
+ansline = " " + ansline;
+}
+for (var tmp = 0; tmp< istr.length +1; tmp++) {
+ansline =  ansline + "-";
+}
+
+var aaaa = document.getElementById("a");
+aaaa.innerHTML= "\n" + anspad + ans + "\n" + ansline + "\n" + work.replace(/<m[^<>]*>/g,'');
+
+
+
+var bbbb = document.getElementById("b");
+bbbb.innerHTML= "\n&lt;math xmlns='http://www.w3.org/1998/Math/MathML'>" +
+"\n&lt;mlongdiv>" +
+"\n&lt;mn>" +jstr + "&lt;/mn>" +
+"\n&lt;mn>" +istr + "&lt;/mn>" +
+"\n&lt;mn>" +ans + "&lt;/mn>" +
+"\n&lt;msgroup position='2' shift='-1'>" +
+"\n&lt;msgroup>" +
+(work.replace(/<span class=.initial.*<\/span>/,'').replace(/ *<.?span[^<>]*>-*/g,'')).replace(/></g,'>\n<').replace(/</g,'&lt;') +
+"\n&lt;/msgroup>" +
+"\n&lt;/msgroup>" +
+"\n&lt;/mlongdiv>" +
+"\n&lt;math>\n" 
+;
+
+var cccc = document.getElementById("c");
+cccc.innerHTML= "\n<math xmlns='http://www.w3.org/1998/Math/MathML'>" +
+"\n<mlongdiv>" +
+"\n<mn>" +jstr + "</mn>" +
+"\n<mn>" +istr + "</mn>" +
+"\n<mn>" +ans + "</mn>" +
+"\n<msgroup position='2' shift='-1'>" +
+"\n<msgroup>" +
+work.replace(/<span class=.initial.*<\/span>/,'').replace(/ *<.?span[^<>]*>-*/g,'') +
+"\n</msgroup>" +
+"\n</msgroup>" +
+"\n</mlongdiv>" +
+"\n<math>\n" 
+;
+}
+ window.addEventListener('load', longdiv, false);
+</script>
+</html>
+<body>
+
+
+<table border>
+<thead>
+<tr>
+<th>ASCII</th>
+<th>MathML Markup</th>
+<th>MathML Rendering</th>
+</tr>
+</th>
+<tbody>
+<tr>
+<td><pre id="a"></pre></td>
+<td><pre id="b"></pre></td>
+<td><div id="c"></div></td>
+</tr>
+</tbody>
+</table>
+
+
+</body>
+</html>
