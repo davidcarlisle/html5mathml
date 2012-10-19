@@ -20,8 +20,12 @@ return v;
 }
 
 function longdiv() {
-var istr = "12345678912345678";
-var jstr = "325";
+// var istr = "12345678912345678";
+// var jstr = "325";
+
+var istr = document.getElementById("i").value.replace(/[^0-9]/g,'');
+var jstr = document.getElementById("j").value.replace(/[^0-9]/g,'');
+
 
 il=istr.length;
 jl=jstr.length;
@@ -120,6 +124,11 @@ work.replace(/<span class=.initial.*<\/span>/,'').replace(/ *<.?span[^<>]*>-*/g,
 <body>
 
 
+<p><input type="text" id="i" width="10" value="12345678912345678">
+divided by
+<input type="text" id="j" width="10" value="325"><br>
+<button id="submit" text="submit" onclick="longdiv();">Update</button>
+</p>
 <table border>
 <thead>
 <tr>
