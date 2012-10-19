@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<!-- saved from url=(0014)about:internet -->
+<html xmlns:m="http://www.w3.org/1998/Math/MathML" >
 <head>
 <title>MathML mlongdiv generator</title>
 <style>
@@ -9,6 +10,10 @@ padding-left: 1em;
 padding-right: 1em;
 }
 </style>
+
+<object id=MathPlayer classid="clsid:32F66A20-7614-11D4-BD11-00104BD3F987" title="MathPlayer"></object>
+<?import namespace="m" implementation="#MathPlayer" ?>
+
 <script>
 
 function padtol (s,l) {
@@ -65,7 +70,7 @@ var jtimes= j*a1;
 pad = " " + pad;
 rstr= (r - j*a1) + "";
 work = work +  "\n" + pad + padtol((jtimes + "").length,jpadl) + "<span style='color:green'><mn>" +jtimes +"</mn></span>" ;
-work = work +  "\n" + pad +  jline + "<mline/>"; 
+work = work +  "\n" + pad +  jline + "<msline length='" + jpadl + "'/>"; 
 work = work + "</msgroup><msgroup>";
 work = work +  "\n" + pad + padtol(rstr.length,jpadl)+ "<span style='color:red'><mn>"+ rstr +"</span>" + istr.substr(k,1) +"</mn>" ;
 rstr = rstr + istr.substr(k,1);
@@ -92,38 +97,45 @@ var bbbb = document.getElementById("b");
 bbbb.innerHTML= "\n&lt;math xmlns='http://www.w3.org/1998/Math/MathML'>" +
 "\n&lt;mlongdiv>" +
 "\n&lt;mn>" +jstr + "&lt;/mn>" +
-"\n&lt;mn>" +istr + "&lt;/mn>" +
 "\n&lt;mn>" +ans + "&lt;/mn>" +
-"\n&lt;msgroup position='2' shift='-1'>" +
+"\n&lt;mn>" +istr + "&lt;/mn>" +
+"\n&lt;msgroup position='" + (il - jpadl) +"' shift='-1'>" +
 "\n&lt;msgroup>" +
 (work.replace(/<span class=.initial.*<\/span>/,'').replace(/ *<.?span[^<>]*>-*/g,'')).replace(/></g,'>\n<').replace(/</g,'&lt;') +
 "\n&lt;/msgroup>" +
 "\n&lt;/msgroup>" +
 "\n&lt;/mlongdiv>" +
-"\n&lt;math>\n" 
+"\n&lt;/math>\n" 
 ;
 
 var cccc = document.getElementById("c");
-cccc.innerHTML= "\n<math xmlns='http://www.w3.org/1998/Math/MathML'>" +
+cccc.innerHTML= ("\n<math xmlns='http://www.w3.org/1998/Math/MathML'>" +
 "\n<mlongdiv>" +
 "\n<mn>" +jstr + "</mn>" +
-"\n<mn>" +istr + "</mn>" +
 "\n<mn>" +ans + "</mn>" +
-"\n<msgroup position='2' shift='-1'>" +
+"\n<mn>" +istr + "</mn>" +
+"\n<msgroup position='" + (il - jpadl) +"' shift='-1'>" +
 "\n<msgroup>" +
 work.replace(/<span class=.initial.*<\/span>/,'').replace(/ *<.?span[^<>]*>-*/g,'') +
 "\n</msgroup>" +
 "\n</msgroup>" +
 "\n</mlongdiv>" +
-"\n<math>\n" 
+"\n</math>\n")
 ;
+
+//.replace(/(<\/?)m/g,'$1m:m')
 }
  window.addEventListener('load', longdiv, false);
 </script>
+
+<script src="html5mathml.js"></script>
 </head>
 <body>
 
 
+<p>aaa</p>
+<math><msqrt><mfrac><mn>1</mn><mn>2</mn></mfrac></msqrt></math>
+<p>bbb</b>
 <p><input type="text" id="i" width="10" value="12345678912345678">
 divided by
 <input type="text" id="j" width="10" value="325"><br>
@@ -141,7 +153,7 @@ divided by
 <tr>
 <td><pre id="a"></pre></td>
 <td><pre id="b"></pre></td>
-<td><div id="c"></div></td>
+<td><div id="c"></div>
 </tr>
 </tbody>
 </table>
