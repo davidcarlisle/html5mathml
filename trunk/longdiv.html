@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <!-- saved from url=(0014)about:internet -->
+<!--  MathML mlongdiv generator
+      may be distributed under the MIT licence
+-->
 <html xmlns:m="http://www.w3.org/1998/Math/MathML" >
 <head>
 <title>MathML mlongdiv generator</title>
@@ -15,7 +18,6 @@ padding-right: 1em;
 <?import namespace="m" implementation="#MathPlayer" ?>
 
 <script>
-
 function padtol (s,l) {
 var v = "";
 for (var tmp = s; tmp< l; tmp++) {
@@ -71,8 +73,8 @@ var jtimes= j*a1;
 pad = " " + pad;
 rstr= (r - j*a1) + "";
 work = work +  "\n" + pad + padtol((jtimes + "").length,jpadl) + "<span style='color:green'><mn>" +jtimes +"</mn></span>" ;
-work = work +  "\n" + pad +  jline + "<msline length='" + jpadl + "'/>"; 
-work = work + "</msgroup><msgroup>";
+work = work +  "\n" + pad +  jline + "<msline length='" + (k==jl? jl:jpadl) + "'/>"; 
+work = work + "</msgroup><msgroup" +(k==il? " position='1'" : "" ) + ">";
 work = work +  "\n" + pad + padtol(rstr.length,jpadl)+ "<span style='color:red'><mn>"+ rstr +"</span>" + istr.substr(k,1) +"</mn>" ;
 rstr = rstr + istr.substr(k,1);
 }
@@ -115,7 +117,7 @@ cccc.innerHTML= ("\n<math xmlns='http://www.w3.org/1998/Math/MathML'>" +
 "\n<mn>" +jstr + "</mn>" +
 "\n<mn>" +ans + "</mn>" +
 "\n<mn>" +istr + "</mn>" +
-"\n<msgroup position='" + (il - jpadl) +"' shift='-1'>" +
+"\n<msgroup position='" + (il - jl) +"' shift='-1'>" +
 "\n<msgroup>" +
 work.replace(/<span class=.initial.*<\/span>/,'').replace(/ *<.?span[^<>]*>-*/g,'') +
 "\n</msgroup>" +
@@ -133,9 +135,49 @@ work.replace(/<span class=.initial.*<\/span>/,'').replace(/ *<.?span[^<>]*>-*/g,
 </head>
 <body>
 
+<math xmlns='http://www.w3.org/1998/Math/MathML'>
+<mlongdiv>
+<mn>325</mn>
+<mn>20</mn>
+<mn>6502</mn>
+<msgroup position='1' shift='-1'>
+<msgroup>
+<mn>650</mn>
+<msline length='3'/>
+</msgroup>
+<msgroup>
+<mn>02</mn>
+<mn>0</mn>
+<msline length='4'/>
+</msgroup>
+<msgroup position='1'>
+<mn>2</mn>
+</msgroup>
+</msgroup>
+</mlongdiv>
+</math>
+
+<math xmlns='http://www.w3.org/1998/Math/MathML'>
+<mlongdiv>
+<mn>325</mn>
+<mn>2</mn>
+<mn>650</mn>
+<msgroup position='0' shift='-1'>
+<msgroup>
+<mn>650</mn>
+<msline length='3'/>
+</msgroup>
+<msgroup position='1'>
+<mn>0</mn>
+</msgroup>
+</msgroup>
+</mlongdiv>
+</math>
 
 
-<p><input type="text" id="i" width="10" value="12345678912345678">
+<p>
+<!--<input type="text" id="i" width="10" value="12345678912345678">-->
+<input type="text" id="i" width="10" value="6502">
 divided by
 <input type="text" id="j" width="10" value="325"><br>
 <button id="submit" text="submit" onclick="longdiv();">Update</button>
