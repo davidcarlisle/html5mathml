@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+
+<script>
+
+function padtol (s,l) {
+var v = "";
+for (var tmp = s; tmp< l; tmp++) {
+v = v + "\\?";
+}
+return v;
+}
+
+function longdiv(istr,jstr) {
+
+il=istr.length;
+jl=jstr.length;
+
+j=parseInt(jstr,10);
+
+ia=istr.substr(0,jl);
+
+
+if(parseInt(ia,10)< j) {
+ jl= jl+1;
+}
+
+var jpadl=jstr.length+1;
+
+ans="";
+work="";
+work=jstr + "\\hspace{.2em})\\hspace{-.2em}\\overline{\\strut\\hspace{1em}}\\hspace{-1.5em}&\\overline{\\strut" +istr +"}";
+pad ="";
+
+
+var ansline="";
+rstr=istr.substr(0,jl);
+
+
+for (var k=jl;k<=il;k++) {
+r=parseInt(rstr,10);
+a1=Math.floor(r / j);
+ans = ans  + a1;
+var jtimes= j*a1;
+rstr= (r - j*a1) + "";
+work = work +  "\\\\\n&" + pad + "\\underline{" + padtol((jtimes + "").length,jpadl) +jtimes +"}" ;
+work = work +  "\\\\\n&" + pad + padtol(rstr.length,jpadl) + rstr + istr.substr(k,1) ;
+rstr = rstr + istr.substr(k,1);
+pad = "\\?" + pad;
+}
+
+var anspad="";
+for (var tmp = 0; tmp<  jl -1; tmp++) {
+anspad = "\\?" + anspad;
+}
+
+return "\n\\def\\?{\\phantom{0}}\n\\begin{array}{r@{}l}\n&" + anspad + ans + "\\\\" + ansline + "\n" + work + "\n\\end{array}\n";
+}
+
+
+</script>
+
+
+	<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+  var MML = MathJax.ElementJax.mml,
+      TEX = MathJax.InputJax.TeX;
+  TEX.Definitions.macros.longdiv = "myLongDiv";
+  TEX.Parse.Augment({
+    myLongDiv: function (name) {
+      var num = this.GetArgument(name),
+          den = this.GetArgument(name);
+//working!        this.Push(TEX.Parse((num + " + " + den),this.stack.env).mml());
+        this.Push(TEX.Parse(longdiv(num,den),this.stack.env).mml());
+    }
+  });
+});
+</script>
+    </script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<head>
+</head>
+<body>
+
+
+<p>\longdiv{12345678912}{325}</p>
+$$
+\longdiv{12345678912}{325}
+$$
+<p>\longdiv{534}{17}</p>
+$$
+\longdiv{534}{17}
+$$
+</body>
