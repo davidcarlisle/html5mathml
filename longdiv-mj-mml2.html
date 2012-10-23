@@ -44,10 +44,10 @@ a1=Math.floor(r / j);
 ans = ans  + a1;
 var jtimes= j*a1;
 rstr= (r - j*a1) + "";
-work = work +  "\\\\\n&" + pad + "\\underline{" + padtol((jtimes + "").length,jpadl) +jtimes +"}" ;
-work = work +  "\\\\\n&" + pad + padtol(rstr.length,jpadl) + rstr + istr.substr(k,1) ;
+work = work +  "\\\\\n&" + pad + "\\underline{" + padtol((jtimes + "").length,(k==jl? jl:jpadl)) +jtimes +"}" ;
+work = work +  "\\\\\n&" + pad + padtol(rstr.length,(k==jl? jl:jpadl)) + rstr + istr.substr(k,1) ;
 rstr = rstr + istr.substr(k,1);
-pad = "\\?" + pad;
+pad = ((k==jl&& jl < jpadl ) ? "": "\\?") + pad;
 }
 
 var anspad="";
