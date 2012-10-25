@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<!--  MathML mlongdiv generator
+      may be distributed under the MIT licence
+-->
+<html xmlns:m="http://www.w3.org/1998/Math/MathML" >
+<head>
+<title>MathML addition mstack generator</title>
+<style>
+td {
+border: solid thin black;
+padding-left: 1em;
+padding-right: 1em;
+}
+</style>
+
+<object id=MathPlayer classid="clsid:32F66A20-7614-11D4-BD11-00104BD3F987" title="MathPlayer"></object>
+<?import namespace="m" implementation="#MathPlayer" ?>
+
+<script>
+function padtol (s,l) {
+var v = "";
+for (var tmp = s; tmp< l; tmp++) {
+v = v + " ";
+}
+return v;
+}
+
+function longadd() {
+
+var istr = document.getElementById("i").value.replace(/[^0-9]/g,'');
+var jstr = document.getElementById("j").value.replace(/[^0-9]/g,'');
+
+
+il=istr.length;
+jl=jstr.length;
+var ans="";
+var carry="";
+var c=0;
+var m = Math.max(il,jl)+1;
+for (k=1;k<=m;k++){
+carry=((c==0)? " " : "1") + carry;
+tmp=parseInt((k>il)? 0 : istr.charAt(il-k)) + parseInt((k>jl)? 0 : jstr.charAt(jl-k)) + c;
+d=(tmp<10)? tmp : tmp-10;
+if(k<m || d==1) ans = d + ans;
+c=(tmp<10)? 0 : 1;
+}
+var mline="";
+    for(k=0;k<m;k++){
+  mline=mline + "-";
+}
+
+var aaaa = document.getElementById("a");
+aaaa.innerHTML= "\n" +
+    padtol((istr+ "").length,m) + istr + "  \n" +
+    padtol((jstr+ "").length,m) +jstr + " +\n" +
+   mline + "\n" +
+    padtol((ans+ "").length,m) + ans + "\n" +
+  mline + "\n" + 
+    padtol((carry+ "").length,m) + carry + "\n";
+
+
+var bbbb = document.getElementById("b");
+bbbb.innerHTML= "\n&lt;math xmlns='http://www.w3.org/1998/Math/MathML'>" +
+"\n&lt;mstack>" +
+"\n&lt;mn>" +istr + "&lt;/mn>" +
+"\n&lt;msrow>&lt;mn>" +jstr + "&lt;/mn>&lt;mo>+&lt;/mo>&lt;/msrow>" +
+"\n&lt;msline length=\"" + m + "\"/>" +
+"\n&lt;mn>" +ans + "&lt;/mn>" +
+"\n&lt;msline length=\"" + m + "\"/>" +
+"\n&lt;mscarries>" +carry.replace(/^ */,'').replace(/1/g,'&lt;mn>1&lt;/mn>').replace(/ /g,'&lt;none/>') + "&lt;/mscarries>" +
+"\n&lt;/mstack>" +
+"\n&lt;/math>\n" ;
+
+var cccc = document.getElementById("c");
+cccc.innerHTML= "\n<math xmlns='http://www.w3.org/1998/Math/MathML'>" +
+"\n<mstack>" +
+"\n<mn>" +istr + "</mn>" +
+"\n<msrow><mn>" +jstr + "</mn><mo>+</mo></msrow>" +
+"\n<msline length=\"" + m + "\"></msline>" +
+"\n<mn>" +ans + "</mn>" +
+"\n<msline length=\"" + m + "\"></msline>" +
+"\n<mscarries>" +carry.replace(/^ */,'').replace(/1/g,'<mn>1</mn>').replace(/ /g,'<none></none>') + "</mscarries>" +
+"\n</mstack>" +
+"\n</math>\n" ;
+
+}
+ window.addEventListener('load', longadd, false);
+</script>
+
+<script src="html5mathml.js"></script>
+</head>
+<body>
+
+
+<p>
+<input type="text" id="i" width="15" value="12345">
++
+<input type="text" id="j" width="10" value="325"><br>
+<button id="submit" text="submit" onclick="longadd();">Update</button>
+</p>
+<table border>
+<thead>
+<tr>
+<th>ASCII</th>
+<th>MathML Markup</th>
+<th>MathML Rendering</th>
+</tr>
+</th>
+<tbody>
+<tr>
+<td><pre id="a"></pre></td>
+<td><pre id="b"></pre></td>
+<td><div id="c"></div>
+</tr>
+<tr>
+<td><pre id="a2"></pre></td>
+<td><pre id="b2"></pre></td>
+<td><div id="c2"></div>
+</tr>
+</tbody>
+</table>
+
+
+</body>
+</html>
